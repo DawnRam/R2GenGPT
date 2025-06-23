@@ -7,6 +7,7 @@ parser.add_argument('--validate', action='store_true', help="only run validation
 parser.add_argument('--dataset', type=str, default='mimic_cxr', help="iu-xray or mimic-cxr")
 parser.add_argument('--annotation', type=str, default=r'./data/mimic_cxr/annotation.json', help="annotation file of the dataset")
 parser.add_argument('--base_dir', type=str, default=r'./data/mimic_cxr/images', help="base dir to help find images")
+parser.add_argument('--train_ratio', type=float, default=1.0, help="ratio of training data to use (0.0-1.0)")
 parser.add_argument('--batch_size', default=4, type=int, help="use for training duration per worker")
 parser.add_argument('--val_batch_size', default=4, type=int, help="use for validation duration per worker")
 parser.add_argument('--test_batch_size', default=4, type=int, help="use for testing duration per worker")

@@ -1,8 +1,8 @@
-
 import os
 import json
 import re
 import numpy as np
+import random
 from PIL import Image
 import torch.utils.data as data
 from transformers import BertTokenizer, AutoImageProcessor
@@ -93,6 +93,17 @@ def create_datasets(args):
     train_dataset = ParseDataset(args, 'train')
     dev_dataset = ParseDataset(args, 'val')
     test_dataset = ParseDataset(args, 'test')
+    
+    # Apply training data ratio if specified
+    if hasattr(args, 'train_ratio') and args.train_ratio < 1.0:
+        # Set random seed for reproducible sampling
+        random.seed(42)
+        original_train_data = train_dataset.meta
+        num_samples = int(len(original_train_data) * args.train_ratio)
+        sampled_indices = random.sample(range(len(original_train_data)), num_samples)
+        train_dataset.meta = [original_train_data[i] for i in sampled_indices]
+        print(f"Using {len(train_dataset.meta)} samples out of {len(original_train_data)} training samples (ratio: {args.train_ratio})")
+    
     return train_dataset, dev_dataset, test_dataset
 
 

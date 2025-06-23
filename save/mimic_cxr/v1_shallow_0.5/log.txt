@@ -1,0 +1,577 @@
+{'accelerator': 'gpu',
+ 'accumulate_grad_batches': 1,
+ 'annotation': '/nfs/scratch/eechengyang/Data/mimic-cxr/mimic_annotation_all.json',
+ 'base_dir': '/nfs/scratch/eechengyang/Data/mimic-cxr/images',
+ 'batch_size': 8,
+ 'beam_size': 3,
+ 'ckpt_file': None,
+ 'dataset': 'mimic_cxr',
+ 'delta_file': None,
+ 'devices': 4,
+ 'diversity_penalty': 0,
+ 'do_sample': False,
+ 'end_sym': '</s>',
+ 'every_n_train_steps': 0,
+ 'freeze_vm': True,
+ 'global_only': False,
+ 'gradient_clip_val': 1,
+ 'learning_rate': 0.0001,
+ 'length_penalty': 2.0,
+ 'limit_test_batches': 1.0,
+ 'limit_train_batches': 1.0,
+ 'limit_val_batches': 0.5,
+ 'llm_alpha': 16,
+ 'llm_r': 16,
+ 'llm_use_lora': False,
+ 'lm_model': 'stabilityai/stablelm-3b-4e1t',
+ 'lora_dropout': 0.1,
+ 'low_resource': False,
+ 'max_epochs': 5,
+ 'max_length': 100,
+ 'max_new_tokens': 120,
+ 'min_new_tokens': 80,
+ 'no_repeat_ngram_size': 2,
+ 'num_beam_groups': 1,
+ 'num_nodes': 1,
+ 'num_sanity_val_steps': 2,
+ 'num_workers': 8,
+ 'precision': 'bf16-mixed',
+ 'prefetch_factor': 4,
+ 'repetition_penalty': 2.0,
+ 'savedmodel_path': './save/mimic_cxr/v1_shallow_0.5',
+ 'scorer_types': ['Bleu_4', 'CIDEr'],
+ 'strategy': 'ddp',
+ 'temperature': 0,
+ 'test': False,
+ 'test_batch_size': 4,
+ 'train_ratio': 0.5,
+ 'val_batch_size': 8,
+ 'val_check_interval': 0.5,
+ 'validate': False,
+ 'vis_alpha': 16,
+ 'vis_r': 16,
+ 'vis_use_lora': False,
+ 'vision_model': 'microsoft/swin-base-patch4-window7-224',
+ 'weights': [0.5, 0.5]}
+Global seed set to 42
+/home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages/lightning/fabric/plugins/environments/slurm.py:165: PossibleUserWarning: The `srun` command is available on your system but is not used. HINT: If your intention is to run Lightning on SLURM, prepend your python command with `srun` like so: srun python train.py --dataset mimic_cxr --annotation /nfs/scrat ...
+  rank_zero_warn(
+Using bfloat16 Automatic Mixed Precision (AMP)
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Loading vision encoder:microsoft/swin-base-patch4-window7-224
+Loading Frozen vision encoder:microsoft/swin-base-patch4-window7-224 -- Done
+Loading StableLM-3B-4E1T
+stabilityai/stablelm-3b-4e1t
+Loading StableLM Done
+[rank: 0] Global seed set to 42
+Initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/4
+[W623 12:29:53.747819937 socket.cpp:697] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:48987 (errno: 97 - Address family not supported by protocol).
+[rank: 2] Global seed set to 42
+[rank: 1] Global seed set to 42
+[rank: 3] Global seed set to 42
+[rank: 2] Global seed set to 42
+Initializing distributed: GLOBAL_RANK: 2, MEMBER: 3/4
+[W623 12:29:58.430596063 socket.cpp:697] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:48987 (errno: 97 - Address family not supported by protocol).
+[rank: 1] Global seed set to 42
+Initializing distributed: GLOBAL_RANK: 1, MEMBER: 2/4
+[W623 12:29:58.608558316 socket.cpp:697] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:48987 (errno: 97 - Address family not supported by protocol).
+[rank: 3] Global seed set to 42
+Initializing distributed: GLOBAL_RANK: 3, MEMBER: 4/4
+[W623 12:29:59.716539842 socket.cpp:697] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:48987 (errno: 97 - Address family not supported by protocol).
+----------------------------------------------------------------------------------------------------
+distributed_backend=nccl
+All distributed processes registered. Starting with 4 processes
+----------------------------------------------------------------------------------------------------
+
+You are using a CUDA device ('NVIDIA GeForce RTX 3090') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+Using 135395 samples out of 270790 training samples (ratio: 0.5)
+LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+
+  | Name           | Type                | Params
+-------------------------------------------------------
+0 | visual_encoder | SwinModel           | 86.7 M
+1 | lm_model       | StableLmForCausalLM | 2.8 B 
+2 | embed_tokens   | Embedding           | 128 M 
+3 | lm_proj        | Linear              | 2.6 M 
+4 | layer_norm     | LayerNorm           | 5.1 K 
+-------------------------------------------------------
+2.6 M     Trainable params
+2.9 B     Non-trainable params
+2.9 B     Total params
+11,539.262Total estimated model params size (MB)
+Sanity Checking: 0it [00:00, ?it/s]{'accelerator': 'gpu',
+ 'accumulate_grad_batches': 1,
+ 'annotation': '/nfs/scratch/eechengyang/Data/mimic-cxr/mimic_annotation_all.json',
+ 'base_dir': '/nfs/scratch/eechengyang/Data/mimic-cxr/images',
+ 'batch_size': 8,
+ 'beam_size': 3,
+ 'ckpt_file': None,
+ 'dataset': 'mimic_cxr',
+ 'delta_file': None,
+ 'devices': 4,
+ 'diversity_penalty': 0,
+ 'do_sample': False,
+ 'end_sym': '</s>',
+ 'every_n_train_steps': 0,
+ 'freeze_vm': True,
+ 'global_only': False,
+ 'gradient_clip_val': 1,
+ 'learning_rate': 0.0001,
+ 'length_penalty': 2.0,
+ 'limit_test_batches': 1.0,
+ 'limit_train_batches': 1.0,
+ 'limit_val_batches': 0.5,
+ 'llm_alpha': 16,
+ 'llm_r': 16,
+ 'llm_use_lora': False,
+ 'lm_model': 'stabilityai/stablelm-3b-4e1t',
+ 'lora_dropout': 0.1,
+ 'low_resource': False,
+ 'max_epochs': 5,
+ 'max_length': 100,
+ 'max_new_tokens': 120,
+ 'min_new_tokens': 80,
+ 'no_repeat_ngram_size': 2,
+ 'num_beam_groups': 1,
+ 'num_nodes': 1,
+ 'num_sanity_val_steps': 2,
+ 'num_workers': 8,
+ 'precision': 'bf16-mixed',
+ 'prefetch_factor': 4,
+ 'repetition_penalty': 2.0,
+ 'savedmodel_path': './save/mimic_cxr/v1_shallow_0.5',
+ 'scorer_types': ['Bleu_4', 'CIDEr'],
+ 'strategy': 'ddp',
+ 'temperature': 0,
+ 'test': False,
+ 'test_batch_size': 4,
+ 'train_ratio': 0.5,
+ 'val_batch_size': 8,
+ 'val_check_interval': 0.5,
+ 'validate': False,
+ 'vis_alpha': 16,
+ 'vis_r': 16,
+ 'vis_use_lora': False,
+ 'vision_model': 'microsoft/swin-base-patch4-window7-224',
+ 'weights': [0.5, 0.5]}
+Loading vision encoder:microsoft/swin-base-patch4-window7-224
+Loading Frozen vision encoder:microsoft/swin-base-patch4-window7-224 -- Done
+Loading StableLM-3B-4E1T
+stabilityai/stablelm-3b-4e1t
+Loading StableLM Done
+Using 135395 samples out of 270790 training samples (ratio: 0.5)
+{'accelerator': 'gpu',
+ 'accumulate_grad_batches': 1,
+ 'annotation': '/nfs/scratch/eechengyang/Data/mimic-cxr/mimic_annotation_all.json',
+ 'base_dir': '/nfs/scratch/eechengyang/Data/mimic-cxr/images',
+ 'batch_size': 8,
+ 'beam_size': 3,
+ 'ckpt_file': None,
+ 'dataset': 'mimic_cxr',
+ 'delta_file': None,
+ 'devices': 4,
+ 'diversity_penalty': 0,
+ 'do_sample': False,
+ 'end_sym': '</s>',
+ 'every_n_train_steps': 0,
+ 'freeze_vm': True,
+ 'global_only': False,
+ 'gradient_clip_val': 1,
+ 'learning_rate': 0.0001,
+ 'length_penalty': 2.0,
+ 'limit_test_batches': 1.0,
+ 'limit_train_batches': 1.0,
+ 'limit_val_batches': 0.5,
+ 'llm_alpha': 16,
+ 'llm_r': 16,
+ 'llm_use_lora': False,
+ 'lm_model': 'stabilityai/stablelm-3b-4e1t',
+ 'lora_dropout': 0.1,
+ 'low_resource': False,
+ 'max_epochs': 5,
+ 'max_length': 100,
+ 'max_new_tokens': 120,
+ 'min_new_tokens': 80,
+ 'no_repeat_ngram_size': 2,
+ 'num_beam_groups': 1,
+ 'num_nodes': 1,
+ 'num_sanity_val_steps': 2,
+ 'num_workers': 8,
+ 'precision': 'bf16-mixed',
+ 'prefetch_factor': 4,
+ 'repetition_penalty': 2.0,
+ 'savedmodel_path': './save/mimic_cxr/v1_shallow_0.5',
+ 'scorer_types': ['Bleu_4', 'CIDEr'],
+ 'strategy': 'ddp',
+ 'temperature': 0,
+ 'test': False,
+ 'test_batch_size': 4,
+ 'train_ratio': 0.5,
+ 'val_batch_size': 8,
+ 'val_check_interval': 0.5,
+ 'validate': False,
+ 'vis_alpha': 16,
+ 'vis_r': 16,
+ 'vis_use_lora': False,
+ 'vision_model': 'microsoft/swin-base-patch4-window7-224',
+ 'weights': [0.5, 0.5]}
+Loading vision encoder:microsoft/swin-base-patch4-window7-224
+Loading Frozen vision encoder:microsoft/swin-base-patch4-window7-224 -- Done
+Loading StableLM-3B-4E1T
+stabilityai/stablelm-3b-4e1t
+Loading StableLM Done
+Using 135395 samples out of 270790 training samples (ratio: 0.5)
+{'accelerator': 'gpu',
+ 'accumulate_grad_batches': 1,
+ 'annotation': '/nfs/scratch/eechengyang/Data/mimic-cxr/mimic_annotation_all.json',
+ 'base_dir': '/nfs/scratch/eechengyang/Data/mimic-cxr/images',
+ 'batch_size': 8,
+ 'beam_size': 3,
+ 'ckpt_file': None,
+ 'dataset': 'mimic_cxr',
+ 'delta_file': None,
+ 'devices': 4,
+ 'diversity_penalty': 0,
+ 'do_sample': False,
+ 'end_sym': '</s>',
+ 'every_n_train_steps': 0,
+ 'freeze_vm': True,
+ 'global_only': False,
+ 'gradient_clip_val': 1,
+ 'learning_rate': 0.0001,
+ 'length_penalty': 2.0,
+ 'limit_test_batches': 1.0,
+ 'limit_train_batches': 1.0,
+ 'limit_val_batches': 0.5,
+ 'llm_alpha': 16,
+ 'llm_r': 16,
+ 'llm_use_lora': False,
+ 'lm_model': 'stabilityai/stablelm-3b-4e1t',
+ 'lora_dropout': 0.1,
+ 'low_resource': False,
+ 'max_epochs': 5,
+ 'max_length': 100,
+ 'max_new_tokens': 120,
+ 'min_new_tokens': 80,
+ 'no_repeat_ngram_size': 2,
+ 'num_beam_groups': 1,
+ 'num_nodes': 1,
+ 'num_sanity_val_steps': 2,
+ 'num_workers': 8,
+ 'precision': 'bf16-mixed',
+ 'prefetch_factor': 4,
+ 'repetition_penalty': 2.0,
+ 'savedmodel_path': './save/mimic_cxr/v1_shallow_0.5',
+ 'scorer_types': ['Bleu_4', 'CIDEr'],
+ 'strategy': 'ddp',
+ 'temperature': 0,
+ 'test': False,
+ 'test_batch_size': 4,
+ 'train_ratio': 0.5,
+ 'val_batch_size': 8,
+ 'val_check_interval': 0.5,
+ 'validate': False,
+ 'vis_alpha': 16,
+ 'vis_r': 16,
+ 'vis_use_lora': False,
+ 'vision_model': 'microsoft/swin-base-patch4-window7-224',
+ 'weights': [0.5, 0.5]}
+Loading vision encoder:microsoft/swin-base-patch4-window7-224
+Loading Frozen vision encoder:microsoft/swin-base-patch4-window7-224 -- Done
+Loading StableLM-3B-4E1T
+stabilityai/stablelm-3b-4e1t
+Loading StableLM Done
+Using 135395 samples out of 270790 training samples (ratio: 0.5)
+Sanity Checking:   0%|          | 0/2 [00:00<?, ?it/s]Sanity Checking DataLoader 0:   0%|          | 0/2 [00:00<?, ?it/s]/home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages/transformers/generation/configuration_utils.py:590: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:None for open-end generation.
+The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+/home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages/transformers/generation/configuration_utils.py:590: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:None for open-end generation.
+The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+/home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages/transformers/generation/configuration_utils.py:590: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:None for open-end generation.
+The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+/home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages/transformers/generation/configuration_utils.py:590: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:None for open-end generation.
+The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:None for open-end generation.
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:None for open-end generation.
+Sanity Checking DataLoader 0:  50%|█████     | 1/2 [00:05<00:05,  5.98s/it]The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:None for open-end generation.
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:None for open-end generation.
+Sanity Checking DataLoader 0: 100%|██████████| 2/2 [00:10<00:00,  5.21s/it]                                                                           {'Bleu_1': 0.05624999999994978, 'Bleu_2': 0.02141400902698677, 'Bleu_3': 0.009446385997478157, 'Bleu_4': 9.416739781096768e-07, 'ROUGE_L': 0.04822482292257275, 'CIDEr': 0.0030150759551051012}
+Sanity Checking DataLoader 0: 100%|██████████| 2/2 [00:10<00:00,  5.27s/it]                                                                           Saving checkpoint at step 0 to ./save/mimic_cxr/v1_shallow_0.5/checkpoints/checkpoint_epoch0_step0_bleu0.000001_cider0.003015.pth.
+Sanity Checking DataLoader 0: 100%|██████████| 2/2 [00:10<00:00,  5.27s/it]                                                                           huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+Training: 0it [00:00, ?it/s]Training:   0%|          | 0/4231 [00:00<?, ?it/s]Epoch 0:   0%|          | 0/4231 [00:00<?, ?it/s] huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+Epoch 0:   0%|          | 1/4231 [00:05<5:55:50,  5.05s/it]Epoch 0:   0%|          | 1/4231 [00:05<5:55:54,  5.05s/it, v_num=0, loss=3.570]Epoch 0:   0%|          | 2/4231 [00:05<3:08:54,  2.68s/it, v_num=0, loss=3.570]Epoch 0:   0%|          | 2/4231 [00:05<3:13:06,  2.74s/it, v_num=0, loss=3.240]Epoch 0:   0%|          | 3/4231 [00:05<2:16:01,  1.93s/it, v_num=0, loss=3.240]Epoch 0:   0%|          | 3/4231 [00:05<2:18:07,  1.96s/it, v_num=0, loss=2.970]Epoch 0:   0%|          | 4/4231 [00:06<1:49:02,  1.55s/it, v_num=0, loss=2.970]Epoch 0:   0%|          | 4/4231 [00:06<1:50:33,  1.57s/it, v_num=0, loss=3.130]Epoch 0:   0%|          | 5/4231 [00:06<1:32:48,  1.32s/it, v_num=0, loss=3.130]Epoch 0:   0%|          | 5/4231 [00:06<1:34:02,  1.34s/it, v_num=0, loss=2.670]Epoch 0:   0%|          | 6/4231 [00:06<1:21:55,  1.16s/it, v_num=0, loss=2.670]Epoch 0:   0%|          | 6/4231 [00:07<1:23:04,  1.18s/it, v_num=0, loss=2.710]Epoch 0:   0%|          | 7/4231 [00:07<1:14:18,  1.06s/it, v_num=0, loss=2.710]Epoch 0:   0%|          | 7/4231 [00:07<1:15:10,  1.07s/it, v_num=0, loss=2.780]Epoch 0:   0%|          | 8/4231 [00:07<1:08:26,  1.03it/s, v_num=0, loss=2.780]Epoch 0:   0%|          | 8/4231 [00:07<1:09:19,  1.02it/s, v_num=0, loss=2.580]Epoch 0:   0%|          | 9/4231 [00:08<1:04:01,  1.10it/s, v_num=0, loss=2.580]Epoch 0:   0%|          | 9/4231 [00:08<1:08:15,  1.03it/s, v_num=0, loss=2.730]Epoch 0:   0%|          | 10/4231 [00:09<1:03:36,  1.11it/s, v_num=0, loss=2.730]Epoch 0:   0%|          | 10/4231 [00:09<1:04:12,  1.10it/s, v_num=0, loss=2.790]Epoch 0:   0%|          | 11/4231 [00:09<1:00:21,  1.17it/s, v_num=0, loss=2.790]Epoch 0:   0%|          | 11/4231 [00:09<1:00:54,  1.15it/s, v_num=0, loss=2.780]Epoch 0:   0%|          | 12/4231 [00:09<57:35,  1.22it/s, v_num=0, loss=2.780]  Epoch 0:   0%|          | 12/4231 [00:09<58:08,  1.21it/s, v_num=0, loss=2.710]Epoch 0:   0%|          | 13/4231 [00:10<55:19,  1.27it/s, v_num=0, loss=2.710]Epoch 0:   0%|          | 13/4231 [00:10<55:54,  1.26it/s, v_num=0, loss=2.770]Epoch 0:   0%|          | 14/4231 [00:10<53:28,  1.31it/s, v_num=0, loss=2.770]Epoch 0:   0%|          | 14/4231 [00:10<53:54,  1.30it/s, v_num=0, loss=2.690]Epoch 0:   0%|          | 15/4231 [00:11<51:44,  1.36it/s, v_num=0, loss=2.690]Epoch 0:   0%|          | 15/4231 [00:11<52:09,  1.35it/s, v_num=0, loss=2.550]Epoch 0:   0%|          | 16/4231 [00:11<50:13,  1.40it/s, v_num=0, loss=2.550]Epoch 0:   0%|          | 16/4231 [00:11<50:39,  1.39it/s, v_num=0, loss=2.790]Epoch 0:   0%|          | 17/4231 [00:12<51:10,  1.37it/s, v_num=0, loss=2.790]Epoch 0:   0%|          | 17/4231 [00:14<59:01,  1.19it/s, v_num=0, loss=2.440]Epoch 0:   0%|          | 18/4231 [00:14<56:57,  1.23it/s, v_num=0, loss=2.440]Epoch 0:   0%|          | 18/4231 [00:14<57:17,  1.23it/s, v_num=0, loss=2.510]Epoch 0:   0%|          | 19/4231 [00:14<55:24,  1.27it/s, v_num=0, loss=2.510]Epoch 0:   0%|          | 19/4231 [00:15<55:43,  1.26it/s, v_num=0, loss=2.550]Epoch 0:   0%|          | 20/4231 [00:15<54:00,  1.30it/s, v_num=0, loss=2.550]Epoch 0:   0%|          | 20/4231 [00:15<54:21,  1.29it/s, v_num=0, loss=2.170]Epoch 0:   0%|          | 21/4231 [00:15<52:47,  1.33it/s, v_num=0, loss=2.170]Epoch 0:   0%|          | 21/4231 [00:15<53:05,  1.32it/s, v_num=0, loss=2.430]Epoch 0:   1%|          | 22/4231 [00:16<51:39,  1.36it/s, v_num=0, loss=2.430]Epoch 0:   1%|          | 22/4231 [00:16<51:59,  1.35it/s, v_num=0, loss=1.930]Epoch 0:   1%|          | 23/4231 [00:16<50:40,  1.38it/s, v_num=0, loss=1.930]Epoch 0:   1%|          | 23/4231 [00:16<50:56,  1.38it/s, v_num=0, loss=2.370]Epoch 0:   1%|          | 24/4231 [00:17<49:43,  1.41it/s, v_num=0, loss=2.370]Epoch 0:   1%|          | 24/4231 [00:17<49:59,  1.40it/s, v_num=0, loss=2.290]Epoch 0:   1%|          | 25/4231 [00:17<48:49,  1.44it/s, v_num=0, loss=2.290]Epoch 0:   1%|          | 25/4231 [00:17<49:46,  1.41it/s, v_num=0, loss=2.340]Epoch 0:   1%|          | 26/4231 [00:18<48:43,  1.44it/s, v_num=0, loss=2.340]Epoch 0:   1%|          | 26/4231 [00:18<48:57,  1.43it/s, v_num=0, loss=2.230]Epoch 0:   1%|          | 27/4231 [00:18<47:57,  1.46it/s, v_num=0, loss=2.230]Epoch 0:   1%|          | 27/4231 [00:18<48:11,  1.45it/s, v_num=0, loss=2.370]Epoch 0:   1%|          | 28/4231 [00:18<47:12,  1.48it/s, v_num=0, loss=2.370]Epoch 0:   1%|          | 28/4231 [00:18<47:26,  1.48it/s, v_num=0, loss=2.230]Epoch 0:   1%|          | 29/4231 [00:19<46:31,  1.51it/s, v_num=0, loss=2.230]Epoch 0:   1%|          | 29/4231 [00:19<46:44,  1.50it/s, v_num=0, loss=1.730]Epoch 0:   1%|          | 30/4231 [00:19<45:53,  1.53it/s, v_num=0, loss=1.730]Epoch 0:   1%|          | 30/4231 [00:19<46:06,  1.52it/s, v_num=0, loss=2.150]Epoch 0:   1%|          | 31/4231 [00:20<45:19,  1.54it/s, v_num=0, loss=2.150]Epoch 0:   1%|          | 31/4231 [00:20<45:33,  1.54it/s, v_num=0, loss=2.360]Epoch 0:   1%|          | 32/4231 [00:20<44:47,  1.56it/s, v_num=0, loss=2.360]Epoch 0:   1%|          | 32/4231 [00:20<44:59,  1.56it/s, v_num=0, loss=2.280]Epoch 0:   1%|          | 33/4231 [00:20<44:16,  1.58it/s, v_num=0, loss=2.280]Epoch 0:   1%|          | 33/4231 [00:21<46:31,  1.50it/s, v_num=0, loss=2.230]Epoch 0:   1%|          | 34/4231 [00:22<45:46,  1.53it/s, v_num=0, loss=2.230]Epoch 0:   1%|          | 34/4231 [00:22<45:57,  1.52it/s, v_num=0, loss=2.120]Epoch 0:   1%|          | 35/4231 [00:22<45:15,  1.55it/s, v_num=0, loss=2.120]Epoch 0:   1%|          | 35/4231 [00:22<45:26,  1.54it/s, v_num=0, loss=2.110]Epoch 0:   1%|          | 36/4231 [00:23<44:46,  1.56it/s, v_num=0, loss=2.110]Epoch 0:   1%|          | 36/4231 [00:23<44:56,  1.56it/s, v_num=0, loss=2.100]Epoch 0:   1%|          | 37/4231 [00:23<44:21,  1.58it/s, v_num=0, loss=2.100]Epoch 0:   1%|          | 37/4231 [00:23<44:31,  1.57it/s, v_num=0, loss=2.280]Epoch 0:   1%|          | 38/4231 [00:23<43:53,  1.59it/s, v_num=0, loss=2.280]Epoch 0:   1%|          | 38/4231 [00:23<44:04,  1.59it/s, v_num=0, loss=2.170]Epoch 0:   1%|          | 39/4231 [00:24<43:28,  1.61it/s, v_num=0, loss=2.170]Epoch 0:   1%|          | 39/4231 [00:24<43:39,  1.60it/s, v_num=0, loss=2.360]Epoch 0:   1%|          | 40/4231 [00:24<43:05,  1.62it/s, v_num=0, loss=2.360]Epoch 0:   1%|          | 40/4231 [00:24<43:15,  1.62it/s, v_num=0, loss=2.250]Epoch 0:   1%|          | 41/4231 [00:25<42:43,  1.63it/s, v_num=0, loss=2.250]Epoch 0:   1%|          | 41/4231 [00:25<43:57,  1.59it/s, v_num=0, loss=1.790]Epoch 0:   1%|          | 42/4231 [00:26<43:26,  1.61it/s, v_num=0, loss=1.790]Epoch 0:   1%|          | 42/4231 [00:26<43:35,  1.60it/s, v_num=0, loss=2.200]Epoch 0:   1%|          | 43/4231 [00:26<43:05,  1.62it/s, v_num=0, loss=2.200]Epoch 0:   1%|          | 43/4231 [00:26<43:14,  1.61it/s, v_num=0, loss=1.960]Epoch 0:   1%|          | 44/4231 [00:26<42:44,  1.63it/s, v_num=0, loss=1.960]Epoch 0:   1%|          | 44/4231 [00:27<42:53,  1.63it/s, v_num=0, loss=2.110]Epoch 0:   1%|          | 45/4231 [00:27<42:23,  1.65it/s, v_num=0, loss=2.110]Epoch 0:   1%|          | 45/4231 [00:27<42:32,  1.64it/s, v_num=0, loss=2.030]Epoch 0:   1%|          | 46/4231 [00:27<42:05,  1.66it/s, v_num=0, loss=2.030]Epoch 0:   1%|          | 46/4231 [00:27<42:13,  1.65it/s, v_num=0, loss=2.380]Epoch 0:   1%|          | 47/4231 [00:28<41:46,  1.67it/s, v_num=0, loss=2.380]Epoch 0:   1%|          | 47/4231 [00:28<41:54,  1.66it/s, v_num=0, loss=2.070]Epoch 0:   1%|          | 48/4231 [00:28<41:29,  1.68it/s, v_num=0, loss=2.070]Epoch 0:   1%|          | 48/4231 [00:28<41:37,  1.67it/s, v_num=0, loss=2.060]Epoch 0:   1%|          | 49/4231 [00:28<41:12,  1.69it/s, v_num=0, loss=2.060]Epoch 0:   1%|          | 49/4231 [00:30<42:43,  1.63it/s, v_num=0, loss=2.170]Epoch 0:   1%|          | 50/4231 [00:30<42:20,  1.65it/s, v_num=0, loss=2.170]Epoch 0:   1%|          | 50/4231 [00:30<42:27,  1.64it/s, v_num=0, loss=2.060]Epoch 0:   1%|          | 51/4231 [00:30<42:03,  1.66it/s, v_num=0, loss=2.060]Epoch 0:   1%|          | 51/4231 [00:30<42:10,  1.65it/s, v_num=0, loss=2.120]Epoch 0:   1%|          | 52/4231 [00:31<41:46,  1.67it/s, v_num=0, loss=2.120]Epoch 0:   1%|          | 52/4231 [00:31<41:53,  1.66it/s, v_num=0, loss=2.460]Epoch 0:   1%|▏         | 53/4231 [00:31<41:30,  1.68it/s, v_num=0, loss=2.460]Epoch 0:   1%|▏         | 53/4231 [00:31<41:37,  1.67it/s, v_num=0, loss=1.920]Epoch 0:   1%|▏         | 54/4231 [00:32<41:16,  1.69it/s, v_num=0, loss=1.920]Epoch 0:   1%|▏         | 54/4231 [00:32<41:23,  1.68it/s, v_num=0, loss=1.320]Epoch 0:   1%|▏         | 55/4231 [00:32<41:01,  1.70it/s, v_num=0, loss=1.320]Epoch 0:   1%|▏         | 55/4231 [00:32<41:08,  1.69it/s, v_num=0, loss=2.110]Epoch 0:   1%|▏         | 56/4231 [00:32<40:47,  1.71it/s, v_num=0, loss=2.110]Epoch 0:   1%|▏         | 56/4231 [00:32<40:54,  1.70it/s, v_num=0, loss=2.160]Epoch 0:   1%|▏         | 57/4231 [00:33<40:34,  1.71it/s, v_num=0, loss=2.160]Epoch 0:   1%|▏         | 57/4231 [00:33<41:14,  1.69it/s, v_num=0, loss=2.070]Epoch 0:   1%|▏         | 58/4231 [00:34<40:54,  1.70it/s, v_num=0, loss=2.070]Epoch 0:   1%|▏         | 58/4231 [00:34<41:01,  1.70it/s, v_num=0, loss=2.240]Epoch 0:   1%|▏         | 59/4231 [00:34<40:41,  1.71it/s, v_num=0, loss=2.240]Epoch 0:   1%|▏         | 59/4231 [00:35<41:44,  1.67it/s, v_num=0, loss=1.770]Epoch 0:   1%|▏         | 60/4231 [00:35<41:24,  1.68it/s, v_num=0, loss=1.770]Epoch 0:   1%|▏         | 60/4231 [00:35<41:30,  1.67it/s, v_num=0, loss=2.170]Epoch 0:   1%|▏         | 61/4231 [00:36<41:10,  1.69it/s, v_num=0, loss=2.170]Epoch 0:   1%|▏         | 61/4231 [00:36<41:17,  1.68it/s, v_num=0, loss=2.160]Epoch 0:   1%|▏         | 62/4231 [00:36<40:57,  1.70it/s, v_num=0, loss=2.160]Epoch 0:   1%|▏         | 62/4231 [00:36<41:04,  1.69it/s, v_num=0, loss=2.100]Epoch 0:   1%|▏         | 63/4231 [00:36<40:45,  1.70it/s, v_num=0, loss=2.100]Epoch 0:   1%|▏         | 63/4231 [00:37<40:51,  1.70it/s, v_num=0, loss=2.310]

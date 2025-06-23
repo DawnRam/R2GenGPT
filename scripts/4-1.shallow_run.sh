@@ -11,7 +11,7 @@ dataset="mimic_cxr"
 annotation="/nfs/scratch/eechengyang/Data/mimic-cxr/mimic_annotation_all.json"
 base_dir="/nfs/scratch/eechengyang/Data/mimic-cxr/images"
 
-version="v1_shallow"
+version="v1_shallow_0.5"
 savepath="./save/$dataset/$version"
 
 if [ ! -d "$savepath" ]; then
@@ -25,6 +25,7 @@ python -u train.py \
     --dataset ${dataset} \
     --annotation ${annotation} \
     --base_dir ${base_dir} \
+    --train_ratio 0.5 \
     --batch_size 8 \
     --val_batch_size 8 \
     --freeze_vm True \
