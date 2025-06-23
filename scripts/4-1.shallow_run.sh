@@ -3,7 +3,7 @@
 # ============================ GPU Settings ===============================
 # To run on specific GPUs, set the CUDA_VISIBLE_DEVICES environment variable.
 # For example, to use GPUs 0, 1, 2, and 3:
-export CUDA_VISIBLE_DEVICES=0,1,2,3
+export CUDA_VISIBLE_DEVICES=4,5,6,7
 # The --devices argument below should match the number of GPUs you've made visible (in this case, 4).
 # ========================================================================
 
@@ -11,7 +11,7 @@ dataset="mimic_cxr"
 annotation="/nfs/scratch/eechengyang/Data/mimic-cxr/mimic_annotation_all.json"
 base_dir="/nfs/scratch/eechengyang/Data/mimic-cxr/images"
 
-version="v1_shallow_0.5"
+version="v1_shallow_0.05"
 savepath="./save/$dataset/$version"
 
 if [ ! -d "$savepath" ]; then
@@ -25,7 +25,7 @@ python -u train.py \
     --dataset ${dataset} \
     --annotation ${annotation} \
     --base_dir ${base_dir} \
-    --train_ratio 0.5 \
+    --train_ratio 0.05 \
     --batch_size 8 \
     --val_batch_size 8 \
     --freeze_vm True \
