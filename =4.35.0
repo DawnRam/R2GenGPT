@@ -1,0 +1,35 @@
+Requirement already satisfied: transformers in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (4.30.2)
+Collecting transformers
+  Downloading transformers-4.46.3-py3-none-any.whl.metadata (44 kB)
+Requirement already satisfied: filelock in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from transformers) (3.16.1)
+Requirement already satisfied: huggingface-hub<1.0,>=0.23.2 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from transformers) (0.33.0)
+Requirement already satisfied: numpy>=1.17 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from transformers) (1.24.4)
+Requirement already satisfied: packaging>=20.0 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from transformers) (24.2)
+Requirement already satisfied: pyyaml>=5.1 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from transformers) (6.0.2)
+Requirement already satisfied: regex!=2019.12.17 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from transformers) (2024.11.6)
+Requirement already satisfied: requests in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from transformers) (2.32.4)
+Collecting tokenizers<0.21,>=0.20 (from transformers)
+  Downloading tokenizers-0.20.3-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.7 kB)
+Requirement already satisfied: safetensors>=0.4.1 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from transformers) (0.5.3)
+Requirement already satisfied: tqdm>=4.27 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from transformers) (4.67.1)
+Requirement already satisfied: fsspec>=2023.5.0 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from huggingface-hub<1.0,>=0.23.2->transformers) (2024.12.0)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from huggingface-hub<1.0,>=0.23.2->transformers) (4.13.2)
+Requirement already satisfied: hf-xet<2.0.0,>=1.1.2 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from huggingface-hub<1.0,>=0.23.2->transformers) (1.1.5)
+Requirement already satisfied: charset_normalizer<4,>=2 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from requests->transformers) (3.4.2)
+Requirement already satisfied: idna<4,>=2.5 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from requests->transformers) (3.10)
+Requirement already satisfied: urllib3<3,>=1.21.1 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from requests->transformers) (1.26.20)
+Requirement already satisfied: certifi>=2017.4.17 in /home/eechengyang/anaconda3/envs/mrg/lib/python3.8/site-packages (from requests->transformers) (2025.6.15)
+Downloading transformers-4.46.3-py3-none-any.whl (10.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.0/10.0 MB 34.4 MB/s eta 0:00:00
+Downloading tokenizers-0.20.3-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.0/3.0 MB 19.6 MB/s eta 0:00:00
+Installing collected packages: tokenizers, transformers
+  Attempting uninstall: tokenizers
+    Found existing installation: tokenizers 0.13.3
+    Uninstalling tokenizers-0.13.3:
+      Successfully uninstalled tokenizers-0.13.3
+  Attempting uninstall: transformers
+    Found existing installation: transformers 4.30.2
+    Uninstalling transformers-4.30.2:
+      Successfully uninstalled transformers-4.30.2
+Successfully installed tokenizers-0.20.3 transformers-4.46.3
